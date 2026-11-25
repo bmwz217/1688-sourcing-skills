@@ -1,0 +1,20 @@
+{
+  "name": "1688-sourcing-skills",
+  "interface": {
+    "displayName": "1688选品技能"
+  },
+  "plugins": [
+    {
+      "name": "1688-sourcing",
+      "source": {
+        "source": "local",
+        "path": "./plugins/1688-sourcing"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

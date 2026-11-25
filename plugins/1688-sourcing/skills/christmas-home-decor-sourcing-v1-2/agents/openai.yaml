@@ -1,0 +1,7 @@
+interface:
+  display_name: "圣诞和家居装饰品自动化选品v1-2"
+  short_description: "按选品硬规则筛选1688圣诞与家居装饰商品，并核算上架利润"
+  default_prompt: "使用 $christmas-home-decor-sourcing-v1-2 按流程筛选1688商品并核算利润表。"
+policy:
+  allow_implicit_invocation: true
+

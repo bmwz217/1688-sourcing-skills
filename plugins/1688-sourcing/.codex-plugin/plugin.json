@@ -1,0 +1,10 @@
+{
+  "name": "1688-sourcing",
+  "version": "1.2.0",
+  "description": "1688圣诞与家居装饰选品流程及配套图片下载工具",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "1688选品助手",
+    "shortDescription": "按选品规则筛选1688商品并核算利润"
+  }
+}
