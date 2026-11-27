@@ -1,0 +1,3 @@
+interface:
+  display_name: "店小秘助手"
+  short_description: "实时查询亚马逊各店订单和商品，导出表格与面单，发货后逐单核对"

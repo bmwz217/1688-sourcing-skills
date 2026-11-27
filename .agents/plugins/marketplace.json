@@ -1,7 +1,7 @@
 {
   "name": "1688-sourcing-skills",
   "interface": {
-    "displayName": "1688选品技能"
+    "displayName": "亚马逊技能仓库"
   },
   "plugins": [
     {

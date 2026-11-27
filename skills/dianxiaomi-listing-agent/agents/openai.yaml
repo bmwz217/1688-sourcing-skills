@@ -1,0 +1,4 @@
+interface:
+  display_name: "店小秘极简上架"
+  short_description: "引用模板新增或编辑 Amazon COLOR 变体商品，单款也必须有颜色子 SKU"
+  default_prompt: "使用 $dianxiaomi-listing-agent-v1-0 按 COLOR 模板新增或编辑重发商品，单款也必须有独立颜色子 SKU。"

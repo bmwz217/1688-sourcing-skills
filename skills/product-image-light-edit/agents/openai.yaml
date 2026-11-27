@@ -1,0 +1,7 @@
+interface:
+  display_name: "亚马逊商品套图"
+  short_description: "依据目标SKU实拍与买家疑问规划亚马逊套图，用 ImageGen 逐张编辑白底主图和附图。"
+  default_prompt: "使用 $product-image-light-edit，核对目标SKU原图与商品事实，按买家疑问和有效证据规划图数与图型，用 ImageGen 逐张编辑并验收亚马逊白底主图和附图。"
+
+policy:
+  allow_implicit_invocation: true

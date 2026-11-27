@@ -1,28 +1,37 @@
-# 1688 选品技能
+# 亚马逊技能仓库
 
-这是公开的技能仓库，任何人都可以查看其中的流程、脚本和模板。
+公开的 Codex 技能源仓库。完整技能说明、脚本、引用资料和模板统一保存在 `skills/<本机技能文件夹名>/`。
 
-## 如何获取最新版流程
+## 每次使用获取最新版
 
-圣诞家居选品技能每次启动时，会直接读取 GitHub 上公开的最新流程文件。使用者不需要 GitHub 账号，也不需要把 GitHub 连接到 Codex；只需能联网，并安装最新版的 1688 选品插件。
+本机保留的技能入口只负责下载并调用本仓库中的最新版。入口每次运行时从公开仓库获取最新 `main` 压缩包，调用 `scripts/fetch-latest-skill.ps1`，把指定技能完整目录刷新到稳定缓存：
 
-## 更新规则
+`%LOCALAPPDATA%\AmazonSkills\skills\<技能名>\`
 
-日常规则修改只需编辑并提交 `workflow/christmas-home-decor-sourcing-v1-2.md` 到默认分支 `main`。下一次运行技能时会读取新内容，不需要重新打包或重新分发整个技能。
+无需 GitHub 账号或 GitHub 连接，只需能访问公开网页。浏览器登录资料保存在单独的本机目录，不放入仓库或可被替换的技能缓存。下载器的商品输出必须使用用户提供的绝对 `--folder` 路径。
 
-技能入口已改为读取公开网页。已安装旧版本的使用者需要先更新一次插件；之后日常流程变更不需要再更新插件。
+## 更新技能
 
-## 包含内容
+修改 `skills/<技能名>/` 下的流程或配套文件并提交到默认分支 `main`。下一次调用时会下载该技能的新目录，不需要重新打包或逐人发送文件。新增全新技能时，仍需为本机安装一次对应入口。
 
-- 圣诞与家居装饰选品技能及其配套脚本、利润表模板
-- 1688 下载器技能及其配套脚本
-- Codex 插件和 GitHub marketplace 配置
+维护者可用以下命令在本地检查指定技能的最新文件：
 
-## 运行依赖
+`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\fetch-latest-skill.ps1 -SkillFolderName "amazon-competitor-listing"`
 
-- 选品流程需能访问公开的 GitHub 原文地址，并调用 `$ego-browser`；使用环境需提供该浏览器工具。
-- 1688 下载器在本机运行，需要 Windows、Python 和 Edge；首次运行会在下载器脚本旁创建“浏览器用户数据”目录，供使用者自行登录 1688。
-- 下载器的 Python 依赖见其 `scripts/requirements.txt` 和 `scripts/详情图清理依赖.txt`。
-- 登录数据和下载结果不属于仓库内容，已通过 `.gitignore` 排除。请勿提交这些目录。
+脚本输出缓存目录路径。若下载或安全检查失败，脚本会报错；入口必须停止，不得退回使用旧缓存。
 
-仓库现为公开状态，因此任何人都能看到其中的业务规则、脚本和模板。仓库不包含浏览器登录资料。
+## 技能目录
+
+- `skills/1688-image-downloader-v1.2/`
+- `skills/amazon-competitor-listing/`
+- `skills/backpack-product-image-design-v1-6/`
+- `skills/christmas-home-decor-sourcing-v1-2/`
+- `skills/dianxiaomi-listing-agent/`
+- `skills/product-image-light-edit/`
+- `skills/店小秘助手/`
+
+每个目录包含对应的 `SKILL.md` 和该技能所需的配套脚本、引用资料或模板。
+
+## 维护范围
+
+仓库不包含浏览器登录资料、缓存文件或店小秘账户配置。第三方许可证未确认的 `ui-ux-pro-max` 和 Codex 自带的系统技能、浏览器技能不在此仓库中。

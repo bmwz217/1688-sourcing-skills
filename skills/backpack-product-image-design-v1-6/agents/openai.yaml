@@ -1,0 +1,7 @@
+interface:
+  display_name: "背包产品图设计v1-6"
+  short_description: "依据1688原图，为各背包子SKU制作并核验6–9张亚马逊上架图。"
+  default_prompt: "使用 $backpack-product-image-design-v1-6，先筛查款式的全部变体，依据1688原图为每个目标子SKU制作并核验6–9张亚马逊上架图。"
+
+policy:
+  allow_implicit_invocation: true

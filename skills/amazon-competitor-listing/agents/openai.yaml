@@ -1,0 +1,4 @@
+interface:
+  display_name: "Listing 撰写与竞品调研"
+  short_description: "研究包袋和家居装饰的 Amazon 关键词并撰写中英 Listing"
+  default_prompt: "使用 $amazon-competitor-listing，核对指定目录已有商品与变体，研究 Amazon 美国站关键词，按父 SKU 交付中英 Listing 和关键词证据。按我指定的范围和字段执行。"
