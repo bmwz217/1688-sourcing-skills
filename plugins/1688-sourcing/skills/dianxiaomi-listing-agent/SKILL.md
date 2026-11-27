@@ -13,8 +13,7 @@ description: 适用于通过店小秘新增或编辑 Amazon 商品 Listing。
 $ErrorActionPreference = "Stop"
 $skillFilePath = "<填写当前技能元数据中此 SKILL.md 的绝对路径>"
 $skillEntryDirectory = Split-Path -Parent $skillFilePath
-$pluginRoot = [System.IO.Path]::GetFullPath((Join-Path $skillEntryDirectory "..\.."))
-$helperPath = Join-Path $pluginRoot "scripts\fetch-latest-skill.ps1"
+$helperPath = Join-Path $skillEntryDirectory "scripts\fetch-latest-skill.ps1"
 if (-not (Test-Path -LiteralPath $helperPath -PathType Leaf)) { throw "入口包缺少本机获取脚本；请重新安装更新后的技能包。" }
 $directoryOutput = & $helperPath -SkillFolderName "dianxiaomi-listing-agent"
 $skillDirectory = [string]($directoryOutput | Select-Object -Last 1)

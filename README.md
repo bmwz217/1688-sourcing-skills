@@ -4,7 +4,7 @@
 
 ## 每次使用获取最新版
 
-每个技能入口包都带有经过检查的本机获取脚本。调用时，入口运行包内这份本机脚本；它只把公开仓库最新 `main` 压缩包作为数据下载、校验并解压到稳定缓存，不会在每次使用时从 GitHub 下载并执行新的 PowerShell 脚本：
+每个技能入口目录都随包附带一份经过检查的本机获取脚本：`plugins/1688-sourcing/skills/<技能名>/scripts/fetch-latest-skill.ps1`。调用时，入口运行这份本机脚本；它只把公开仓库最新 `main` 压缩包作为数据下载、校验并解压到稳定缓存，不会在每次使用时从 GitHub 下载并执行新的 PowerShell 脚本：
 
 `%LOCALAPPDATA%\AmazonSkills\skills\<技能名>\`
 
