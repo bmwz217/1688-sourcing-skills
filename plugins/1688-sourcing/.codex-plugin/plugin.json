@@ -1,10 +1,10 @@
 {
   "name": "1688-sourcing",
-  "version": "1.2.2",
-  "description": "1688选品技能；每次运行前读取公开 GitHub 上的最新流程，无需 GitHub 连接",
+  "version": "2.0.0",
+  "description": "整合7项 Amazon/1688 选品、竞品 Listing、商品图片、1688 图片下载与店小秘上架运营技能；每次运行从公开仓库读取最新版，无需 GitHub 连接。",
   "skills": "./skills/",
   "interface": {
-    "displayName": "1688选品助手",
-    "shortDescription": "自动读取公开仓库最新规则，筛选1688商品并核算利润"
+    "displayName": "亚马逊技能助手",
+    "shortDescription": "集成7项选品、竞品 Listing、商品图片和店小秘运营技能；每次运行读取公开仓库最新版。"
   }
 }

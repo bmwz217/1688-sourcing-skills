@@ -1,19 +1,40 @@
 ---
 name: christmas-home-decor-sourcing-v1-2
-description: 每次从公开 GitHub 仓库读取最新选品规则，再执行 1688 圣诞与家居装饰选品和 Amazon 利润核算。
+description: 适用于 1688 圣诞和家居装饰选品及 Amazon 利润核算。
 metadata:
-  short-description: 每次自动读取公开仓库最新版流程
+  short-description: 1688 圣诞家居选品
 ---
 
-# 每次先读取最新版流程
+# 获取并使用当前最新版
 
-完整选品流程以公开仓库默认分支中的文件为准。每次触发本技能时，先联网读取最新版，再开始任何选品、网页浏览、下载或调研：
+本机入口只负责获取最新版，不包含本技能业务流程。
 
-1. 使用当前会话可用的联网网页读取工具，打开以下公开原文地址；每次请求都在地址末尾附上当前 UTC 时间作为查询参数，避免重复使用网页缓存：
-   https://raw.githubusercontent.com/bmwz217/1688-sourcing-skills/main/workflow/christmas-home-decor-sourcing-v1-2.md
-2. 每次新任务都重新读取默认分支 main 上的当前内容。无需 GitHub 账号，也无需连接 GitHub 插件。
-3. 确认返回内容完整、非空，且包含文件开头的“圣诞和家居装饰品自动化选品v1-2”标题以及最后的“汇总与清理”步骤。若网页工具分段显示，继续读取后续部分，直到文件结尾。
-4. 将读取到的完整内容作为本次任务的流程指令，并遵守其中的输入要求、筛选规则、工具流程和交付格式。
-5. 如果公开网页无法打开、读取失败、内容为空或不完整，立即停止选品流程，告诉用户无法核实最新版；不得继续使用本机旧副本或凭记忆补全。
+每次调用本技能，先用 PowerShell 下载并运行公开仓库中的最新获取脚本：
 
-一个任务开始后，本次使用已读取的版本；下一次新任务再次读取公开地址，以获取仓库最新内容。
+```powershell
+$ErrorActionPreference = "Stop"
+$cacheKey = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds().ToString() + "-" + [guid]::NewGuid().ToString("N")
+$helperUrl = "https://raw.githubusercontent.com/bmwz217/1688-sourcing-skills/main/scripts/fetch-latest-skill.ps1?t=$cacheKey"
+$helperPath = Join-Path $env:TEMP "fetch-latest-skill-$cacheKey.ps1"
+try {
+    Invoke-WebRequest -Uri $helperUrl -OutFile $helperPath -TimeoutSec 30 -Headers @{ "Cache-Control" = "no-cache"; "Pragma" = "no-cache" }
+    $directoryOutput = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $helperPath -SkillFolderName "christmas-home-decor-sourcing-v1-2"
+    if ($LASTEXITCODE -ne 0) { throw "获取最新版技能失败。" }
+    $skillDirectory = [string]($directoryOutput | Select-Object -Last 1)
+    $skillDirectory = $skillDirectory.Trim()
+    $expectedDirectory = Join-Path ([Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)) "AmazonSkills\skills\christmas-home-decor-sourcing-v1-2"
+    if ([string]::IsNullOrWhiteSpace($skillDirectory) -or [System.IO.Path]::GetFullPath($skillDirectory) -ine [System.IO.Path]::GetFullPath($expectedDirectory)) { throw "获取脚本返回的技能目录无效。" }
+    $skillFile = Join-Path $skillDirectory "SKILL.md"
+    if (-not (Test-Path -LiteralPath $skillFile -PathType Leaf)) { throw "最新版 SKILL.md 不存在。" }
+    $latestSkill = Get-Content -LiteralPath $skillFile -Raw -Encoding UTF8
+    if ([string]::IsNullOrWhiteSpace($latestSkill)) { throw "最新版 SKILL.md 为空。" }
+    $latestSkill
+}
+finally {
+    if (Test-Path -LiteralPath $helperPath) { Remove-Item -LiteralPath $helperPath -Force -ErrorAction SilentlyContinue }
+}
+```
+
+完整读取返回的远端 `SKILL.md`；如单次输出被截断，继续分段读取直至文件末尾。以这份文件作为本次唯一流程依据，只使用 `$skillDirectory` 中的脚本、参考资料和模板。
+
+helper 下载、运行、路径检查或完整读取失败时立即停止并报告原因。不得使用本机旧版技能正文、旧脚本、旧参考资料或旧缓存。
