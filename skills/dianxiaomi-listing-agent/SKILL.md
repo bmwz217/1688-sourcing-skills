@@ -27,19 +27,21 @@ description: 使用店小秘引用模板新增带 COLOR 变体的 Amazon 商品�
 
 ## 调用
 
-以本文件所在目录为技能根目录；本机路径示例：
+以本机薄入口提供的技能目录为根目录。公开技能包不包含店小秘个人配置工作簿；运行前必须由本机入口传入用户自己的工作簿路径，或由用户通过 `--config-xlsx` 指定。若路径或文件缺失，先请用户提供自己的配置文件；不能假设仓库中有该文件、不能重建配置，也不能展示或泄露其内容。配置说明见 [配置说明](references/workbook-config.md)。
+
+以下示例中的 `$skillRoot` 由本机薄入口指向最新技能缓存目录，`$configPath` 必须是用户提供的本机配置工作簿路径：
 
 ```powershell
-$skillRoot = 'F:\Codex\.codex\skills\dianxiaomi-listing-agent'
-python "$skillRoot/scripts/run_listing.py" --list-config
-python "$skillRoot/scripts/run_listing.py" --inspect-template --shop-name "店铺" --category "类目"
-python "$skillRoot/scripts/run_listing.py" --input "E:\任务目录\产品.json" --dry-run
-python "$skillRoot/scripts/run_listing.py" --input "E:\任务目录\产品.json" --submit-op 2 --output "E:\任务目录\结果.json"
-python "$skillRoot/scripts/run_listing.py" --edit-input "E:\任务目录\编辑.json" --dry-run
-python "$skillRoot/scripts/run_listing.py" --edit-input "E:\任务目录\编辑.json" --submit-op 2 --output "E:\任务目录\编辑结果.json"
+$configPath = '<用户本机配置工作簿路径>'
+python "$skillRoot/scripts/run_listing.py" --config-xlsx "$configPath" --list-config
+python "$skillRoot/scripts/run_listing.py" --config-xlsx "$configPath" --inspect-template --shop-name "店铺" --category "类目"
+python "$skillRoot/scripts/run_listing.py" --config-xlsx "$configPath" --input "E:\\任务目录\\产品.json" --dry-run
+python "$skillRoot/scripts/run_listing.py" --config-xlsx "$configPath" --input "E:\\任务目录\\产品.json" --submit-op 2 --output "E:\\任务目录\\结果.json"
+python "$skillRoot/scripts/run_listing.py" --config-xlsx "$configPath" --edit-input "E:\\任务目录\\编辑.json" --dry-run
+python "$skillRoot/scripts/run_listing.py" --config-xlsx "$configPath" --edit-input "E:\\任务目录\\编辑.json" --submit-op 2 --output "E:\\任务目录\\编辑结果.json"
 ```
 
-按 [输入格式](references/input-schema.md) 由 AI 生成 JSON，不要求用户手写。产品及结果文件放当前任务目录；相对图片路径以产品 JSON 的目录为基准。配置使用技能内的 `店小秘店铺与模板配置.xlsx`，维护方式见 [配置说明](references/workbook-config.md)。缺少依赖时用同一 Python 安装 `scripts/requirements.txt`。
+按 [输入格式](references/input-schema.md) 由 AI 生成 JSON，不要求用户手写。产品及结果文件放当前任务目录；相对图片路径以产品 JSON 的目录为基准。缺少依赖时用同一 Python 安装 `scripts/requirements.txt`。
 
 用户要求上架就执行 `--submit-op 2`（保存并发布），不额外询问保存确认；只保存用 `1`。查看或测试只用模板检查或 `--dry-run`；更新模板后加 `--refresh-cache`。
 
