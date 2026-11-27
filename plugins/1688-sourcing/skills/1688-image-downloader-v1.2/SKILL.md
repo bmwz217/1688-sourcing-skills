@@ -12,7 +12,7 @@ description: 适用于下载 1688 商品图片和资料。
 ```powershell
 $ErrorActionPreference = "Stop"
 $cacheKey = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds().ToString() + "-" + [guid]::NewGuid().ToString("N")
-$helperUrl = "https://raw.githubusercontent.com/bmwz217/1688-sourcing-skills/main/scripts/fetch-latest-skill.ps1?t=$cacheKey"
+$helperUrl = "https://raw.githubusercontent.com/bmwz217/amazon-sourcing-skills/main/scripts/fetch-latest-skill.ps1?t=$cacheKey"
 $helperPath = Join-Path $env:TEMP "fetch-latest-skill-$cacheKey.ps1"
 try {
     Invoke-WebRequest -Uri $helperUrl -OutFile $helperPath -TimeoutSec 30 -Headers @{ "Cache-Control" = "no-cache"; "Pragma" = "no-cache" }

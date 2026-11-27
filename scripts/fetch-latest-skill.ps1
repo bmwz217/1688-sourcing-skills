@@ -3,7 +3,7 @@ param([Parameter(Mandatory = $true)][string]$SkillFolderName)
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-$RepositorySlug = 'bmwz217/1688-sourcing-skills'
+$RepositorySlug = 'bmwz217/amazon-sourcing-skills'
 $BranchName = 'main'
 
 if ([string]::IsNullOrWhiteSpace($SkillFolderName) -or
